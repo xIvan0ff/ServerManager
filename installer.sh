@@ -1,5 +1,5 @@
 cd ~
-if ! command -v <the_command> &> /dev/null
+if ! command -v node &> /dev/null
 then
     curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh && sudo bash nodesource_setup.sh && sudo apt install nodejs
 fi
