@@ -1,30 +1,39 @@
 const net = require("net")
 const express = require("express")
 const chalk = require("chalk")
-const gradient = require("gradient-string")
+const chalkGradient = require("gradient-string")
 const chalkAnimation = require("chalk-animation")
-import terminalLink from "terminal-link"
+const terminalLink = require("terminal-link")
 const app = express()
 
 const HTTP_PORT = 3000
 const SOCKET_PORT = 7777
-const SOCKET_HOST = "127.0.0.1"
+const SOCKET_HOST = "0.0.0.0"
+
+console.log(
+    chalk.italic(
+        chalkGradient.fruit(
+            "\n\n\n\n                                                      Loading...\n\n\n\n"
+        )
+    )
+)
 
 app.get("/", (req, res) => {
     res.send("Hello World!")
 })
 
 var server = net.createServer(function (socket) {
-    /* console.log(
-        chalk.green(
-            `[${chalkAnimation.rainbow(
-                `${socket.remoteAddress}:${socket.remotePort}`
-            )}] Connected.`
-        )
-    )
-    */
     socket.on("data", (data) => {
         console.log("Received: " + data)
+        if (data === "servConn") {
+            console.log(
+                chalk.greenBright(
+                    `[${chalkGradient.rainbow(
+                        `${socket.remoteAddress}:${socket.remotePort}`
+                    )}] Connected.`
+                )
+            )
+        }
     })
     socket.on("end", socket.end)
 
@@ -32,12 +41,22 @@ var server = net.createServer(function (socket) {
 })
 
 server.listen(SOCKET_PORT, SOCKET_HOST, () => {
-    // console.log(`Example socket listening on port ${SOCKET_PORT}`)
-    chalkAnimation.rainbow("HELLO!")
+    console.log(
+        `${chalk.grey(
+            `[${chalkGradient.retro(
+                `SOCKET`
+            )}] Listening on port ${chalk.magentaBright(SOCKET_PORT)}.`
+        )}`
+    )
 })
 
 app.listen(HTTP_PORT, () => {
-    // console.log(`Example app listening on port ${HTTP_PORT}`)
-    chalkAnimation.rainbow("HELLO!")
-    const link = terminalLink("OPEN", "https://test.com")
+    const link = terminalLink("[OPEN]", `http://localhost:${HTTP_PORT}`)
+    console.log(
+        `${chalk.grey(
+            `[${chalkGradient.retro(
+                `API`
+            )}] Listening on port ${chalk.magentaBright(HTTP_PORT)}. ${link}`
+        )}`
+    )
 })
