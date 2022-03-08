@@ -1,0 +1,1 @@
+curl -Ls https://raw.githubusercontent.com/xIvan0ff/ServerManager/main/installer.sh | bash -
