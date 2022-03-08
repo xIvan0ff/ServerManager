@@ -8,6 +8,7 @@
     "chalk-animation": "^1.6.0",
     "express": "^4.17.3",
     "gradient-string": "^2.0.0",
+    "joi": "^17.6.0",
     "terminal-link": "^2.1.1"
   },
   "devDependencies": {},

