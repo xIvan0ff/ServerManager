@@ -23,21 +23,31 @@ app.get("/", (req, res) => {
 })
 
 var server = net.createServer(function (socket) {
+    const onLeave = () => {
+        console.log(
+            chalk.grey(
+                `[${chalk.redBright("-")}] ${chalkGradient.rainbow(
+                    `${socket.remoteAddress}:${socket.remotePort}`
+                )} disconnected.`
+            )
+        )
+    }
+
     socket.on("data", (data) => {
         console.log("Received: " + data)
-        if (data === "servConn") {
+        if (data.toString() === "servConn") {
             console.log(
-                chalk.greenBright(
-                    `[${chalkGradient.rainbow(
+                chalk.grey(
+                    `[${chalk.greenBright("+")}] ${chalkGradient.rainbow(
                         `${socket.remoteAddress}:${socket.remotePort}`
-                    )}] Connected.`
+                    )} connected.`
                 )
             )
         }
     })
-    socket.on("end", socket.end)
+    socket.on("end", onLeave)
 
-    socket.on("error", (err) => {})
+    socket.on("error", onLeave)
 })
 
 server.listen(SOCKET_PORT, SOCKET_HOST, () => {
