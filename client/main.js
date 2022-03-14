@@ -93,20 +93,19 @@ client.on("data", function (data) {
         const time = data[3]
         let header = undefined
         if (data.length > 4) header = data[4]
+        let cmd = util.format(
+            METHODS[method],
+            stripHost(host),
+            host,
+            port,
+            time
+        )
         if (header) {
             const cmd = util.format(
                 METHODS[method],
                 stripHost(host),
                 host,
                 header,
-                time
-            )
-        } else {
-            const cmd = util.format(
-                METHODS[method],
-                stripHost(host),
-                host,
-                port,
                 time
             )
         }
