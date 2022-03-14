@@ -10,16 +10,20 @@ then
 fi
 
 git clone https://github.com/xIvan0ff/ServerManager.git
+pkill screen
+pkill node
 rm -rf client
 mkdir client
 mv ServerManager/client/* client/
 rm -rf ServerManager
 chmod -R 777 * 
 cd client
+clear
 echo "Installing main dependencies..."
 npm install
 echo "Done."
 cd methods/browser
+clear
 echo "Installing L7 attack dependencies..."
 npm install
 echo "Done."

