@@ -61,7 +61,9 @@ while True:
 
     # save the working proxies to a file
     open("proxies.txt", "w+").write('\n'.join(final))
-    print("Working", len(final), "/", len(results),
+    currTime = time.localtime()
+    clock = f"{currTime.tm_hour}:{currTime.tm_min}"
+    print("[", clock, "] Working", len(final), "/", len(results),
           "proxies. Execution took [", round((time.time() - start_time), 2), "] seconds.")
 
     time.sleep(5 * 60 * 1000)
