@@ -66,4 +66,4 @@ while True:
     print("[", clock, "] Working", len(final), "/", len(results),
           "proxies. Execution took [", round((time.time() - start_time), 2), "] seconds.")
 
-    time.sleep(5 * 60 * 1000)
+    time.sleep(5 * 60)
