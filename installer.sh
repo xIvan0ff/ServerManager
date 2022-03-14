@@ -19,7 +19,7 @@ cd client
 echo "Installing main dependencies..."
 npm install
 echo "Done."
-cd browser
+cd methods/browser
 echo "Installing L7 attack dependencies..."
 npm install
 echo "Done."
