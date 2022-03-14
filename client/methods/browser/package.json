@@ -1,0 +1,33 @@
+{
+    "name": "msctf",
+    "version": "1.0.0",
+    "description": "",
+    "main": "msctf.js",
+    "dependencies": {
+        "chrome-aws-lambda": "^10.1.0",
+        "cloudflare-scraper": "^1.0.7",
+        "colors": "^1.4.0",
+        "events": "^3.3.0",
+        "fs": "^0.0.1-security",
+        "hcaptcha-solver": "^1.0.2",
+        "minimist": "^1.2.5",
+        "net": "^1.0.2",
+        "proxy-agent": "^5.0.0",
+        "puppeteer": "^3.3.0",
+        "puppeteer-extra": "^3.2.3",
+        "puppeteer-extra-plugin-recaptcha": "^3.5.0",
+        "puppeteer-extra-plugin-stealth": "^2.9.0",
+        "request": "^2.88.2",
+        "request-promise-native": "^1.0.9",
+        "stormwall-bypass": "^1.0.1",
+        "url": "^0.11.0",
+        "user-agents": "^1.0.955",
+        "vm": "^0.1.0",
+        "xmlhttprequest": "^1.8.0"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC"
+}

