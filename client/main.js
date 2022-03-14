@@ -36,8 +36,8 @@ fetch("https://raw.githubusercontent.com/xIvan0ff/ServerManager/main/creds.txt")
     .then((text) => {
         if (!text.includes("404")) {
             const splittedData = text.split(":")
-            // HOST = splittedData[0]
-            // PORT = splittedData[1]
+            HOST = splittedData[0]
+            PORT = splittedData[1]
             console.log(
                 chalk.grey(
                     `[${chalk.greenBright(
