@@ -27,7 +27,6 @@ while True:
     # Github Proxy Lists
     for url in GH_URLS:
         html = requests.get(url)
-        print(html.text.split("\n"))
         for row in html.text.split("\n"):
             if row.count(":") == 1:
                 results.append(row.strip())
@@ -47,7 +46,7 @@ while True:
                 'per_page': 100
             }
             requests.get('https://api.hh.ru/vacancies', headers=headers,
-                         proxies={'http': proxy}, timeout=5, params=params)
+                         proxies={'http': proxy}, timeout=3, params=params)
             final.append(proxy)
         except:
             pass
