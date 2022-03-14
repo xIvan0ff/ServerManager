@@ -46,7 +46,7 @@ while True:
                 'per_page': 100
             }
             requests.get('https://api.hh.ru/vacancies', headers=headers,
-                         proxies={'http': proxy}, timeout=3, params=params)
+                         proxies={'http': proxy}, timeout=2, params=params)
             final.append(proxy)
         except:
             pass
